@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  cmder:
+    restart: unless-stopped
+    build:
+      context: .
+    image: "stakeholder/minter-cmder:2.0.0"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./config:/home/node/app/config:ro
+      - ./env:/home/node/app/env:ro
+#    ports:
+#      - 127.0.0.1:3000:3000
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1400
