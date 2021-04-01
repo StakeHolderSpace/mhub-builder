@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:bionic
 LABEL maintainer="StakeHolder Team <>"
 
 RUN set -eux; \
