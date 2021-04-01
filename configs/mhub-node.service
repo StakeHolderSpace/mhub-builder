@@ -1,0 +1,31 @@
+[Unit]
+Description=Minter-Hub App
+After=network.target
+After=auditd.service
+
+[Service]
+Type=simple
+KillMode=process
+Restart=always
+RestartSec=5
+TimeoutSec=300
+#
+User=mhub
+#RemainAfterExit=yes
+LimitNOFILE=10000
+LimitNPROC=10000
+#
+WorkingDirectory=/home/mhub
+#
+ExecStart=-/bin/bash -c 'test -f /home/mhub/bin/mhub \
+&& /home/mhub/bin/mhub start'
+#
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mhubd
+#
+OOMScoreAdjust=-900
+
+[Install]
+WantedBy=multi-user.target
+Alias=mhub.service

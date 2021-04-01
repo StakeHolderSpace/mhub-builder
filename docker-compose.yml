@@ -1,21 +1,46 @@
 version: '3.3'
 services:
-  cmder:
+  mhub-node:
     restart: unless-stopped
+    container_name: mhub.node
     build:
       context: .
-    image: "stakeholder/minter-cmder:2.0.0"
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
+    image: "stakeholder/minter-hub:latest"
+    networks:
+      - default
+    ports:
+      - 127.0.0.1:36656:36656
+      - 127.0.0.1:26656:26656
+      - 127.0.0.1:26657:26657
+      - 127.0.0.1:1317:1317
+      - 127.0.0.1:1090:1090
+      - 127.0.0.1:9090:9090
+    working_dir: /mhub
+    #environment:
     volumes:
-      - ./config:/home/node/app/config:ro
-      - ./env:/home/node/app/env:ro
-#    ports:
-#      - 127.0.0.1:3000:3000
+      - ./mhub:/mhub/.mhub:rw
+      - /etc/hostname:/etc/hostname:ro
+    command: >
+      bash -c "mhub start \
+        --home /mhub/.mhub \
+        --moniker StakeHolder-Node \
+        --p2p.persistent_peers=bb75bf42dd14f55bb6528e7588d8e63cd2db2a44@46.101.215.17:36656"
+    ulimits:
+      nofile:
+        soft: 10000
+        hard: 10000
+    sysctls:
+      net.core.somaxconn: 20000
+    logging:
+      driver: journald
+      options:
+        tag: mhub.node
+
 
 networks:
   default:
     driver: bridge
     driver_opts:
       com.docker.network.driver.mtu: 1400
+  inside:
+    internal: true
