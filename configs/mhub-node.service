@@ -10,15 +10,14 @@ Restart=always
 RestartSec=5
 TimeoutSec=300
 #
-User=mhub
+User=minter
 #RemainAfterExit=yes
 LimitNOFILE=10000
 LimitNPROC=10000
 #
-WorkingDirectory=/home/mhub
+WorkingDirectory=/home/minter
 #
-ExecStart=-/bin/bash -c 'test -f /home/mhub/bin/mhub \
-&& /home/mhub/bin/mhub start'
+ExecStart=-/bin/bash -c 'test -f ./bin/mhub && ./bin/mhub start'
 #
 StandardOutput=syslog
 StandardError=syslog

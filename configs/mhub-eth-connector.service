@@ -1,0 +1,41 @@
+[Unit]
+Description=Minter-Hub to Ethereum Connector App
+After=network.target
+After=auditd.service
+After=mhub-node.service
+After=eth-node.service
+
+
+[Service]
+Type=simple
+KillMode=process
+Restart=always
+RestartSec=5
+TimeoutSec=300
+#
+User=minter
+#RemainAfterExit=yes
+LimitNOFILE=1000
+LimitNPROC=1000
+#
+WorkingDirectory=/home/minter
+#
+ExecStart=-/bin/bash -c 'test -f  ./bin/orchestrator \
+&& RUST_LOG=info ./bin/orchestrator \
+   --cosmos-phrase="<COSMOS MNEMONIC>"  \
+   --ethereum-key="<ETHEREUM PRIVATE KEY>"  \
+   --cosmos-grpc="http://127.0.0.1:1090" \
+   --cosmos-legacy-rpc="http://127.0.0.1:1317" \
+   --ethereum-rpc="http://127.0.0.1:8545/" \
+   --fees=hub \
+   --contract-address=<ADDRESS OF ETHEREUM CONTRACT>'
+#
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mhub-eth-connectord
+#
+OOMScoreAdjust=-900
+
+[Install]
+WantedBy=multi-user.target
+Alias=mhub-eth-connector.service
