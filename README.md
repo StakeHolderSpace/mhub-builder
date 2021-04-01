@@ -1,4 +1,7 @@
 # Docker Minter Hub
+
+## [Minter Hub](https://github.com/MinterTeam/minter-hub)
+
 ## 0 build Docker images
 ```bash
 docker build --rm --network=host -t stakeholder/dockerfile-gox -f gox.Dockerfile .
@@ -6,7 +9,7 @@ docker build --rm --network=host -t stakeholder/minter-hub:builder -f builder.Do
 docker build --network=host  -t stakeholder/minter-hub .
 ```
 
-## 0.1 Copy binaries to host
+## 1 Copy binaries to host
 ```bash
 docker run  --rm \
 -v $(pwd)/mhub:/mhub/.mhub:rw \
