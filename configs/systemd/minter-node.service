@@ -1,5 +1,5 @@
 [Unit]
-Description=Minter-Hub Node
+Description=Minter Node
 After=network.target
 After=auditd.service
 
@@ -12,19 +12,19 @@ TimeoutSec=300
 #
 User=minter
 #RemainAfterExit=yes
-LimitNOFILE=10000
-LimitNPROC=10000
+LimitNOFILE=70000
+LimitNPROC=16384
 #
 WorkingDirectory=/home/minter
 #
-ExecStart=-/bin/bash -c 'test -f ./bin/mhub && ./bin/mhub start'
+ExecStart=-/bin/bash -c 'test -f  ./bin/minter && ./bin/minter node --testnet'
 #
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=mhubd
+SyslogIdentifier=minterd
 #
 OOMScoreAdjust=-900
 
 [Install]
 WantedBy=multi-user.target
-Alias=mhub.service
+Alias=minter.service

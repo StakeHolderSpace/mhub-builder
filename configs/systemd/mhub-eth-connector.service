@@ -1,5 +1,5 @@
 [Unit]
-Description=Minter-Hub to Ethereum Connector App
+Description=Minter-Hub to Ethereum Connector
 After=network.target
 After=auditd.service
 After=mhub-node.service
@@ -19,16 +19,16 @@ LimitNOFILE=1000
 LimitNPROC=1000
 #
 WorkingDirectory=/home/minter
+EnvironmentFile=/home/minter/.mhub/systemd.env
 #
 ExecStart=-/bin/bash -c 'test -f  ./bin/orchestrator \
 && RUST_LOG=info ./bin/orchestrator \
-   --cosmos-phrase="<COSMOS MNEMONIC>"  \
-   --ethereum-key="<ETHEREUM PRIVATE KEY>"  \
+   --cosmos-phrase="$COSMOS_MNEMONIC"  \
    --cosmos-grpc="http://127.0.0.1:1090" \
    --cosmos-legacy-rpc="http://127.0.0.1:1317" \
    --ethereum-rpc="http://127.0.0.1:8545/" \
    --fees=hub \
-   --contract-address=<ADDRESS OF ETHEREUM CONTRACT>'
+   --contract-address="$HUB_CONTRACT_ADDR"'
 #
 StandardOutput=syslog
 StandardError=syslog

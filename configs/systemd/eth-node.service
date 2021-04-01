@@ -1,0 +1,49 @@
+[Unit]
+Description=Ethereum Node
+After=network.target
+After=auditd.service
+
+[Service]
+Type=simple
+#KillMode=process
+Restart=always
+RestartSec=5
+TimeoutSec=300
+#
+User=minter
+#RemainAfterExit=yes
+LimitNOFILE=10000
+LimitNPROC=8142
+#
+WorkingDirectory=/home/minter
+#
+
+ExecStartPre=-/usr/bin/docker rm eth-node
+ExecStart=/usr/bin/docker run --rm \
+    -v /home/minter/.eth:/root/.ethereum:rw \
+    -p 127.0.0.1:8545:8545 \
+    -p 127.0.0.1:30303:30303 \
+    --ulimit nofile=10000:10000 \
+    --log-driver journald \
+    --name eth-node \
+    ethereum/client-go --ropsten --rpc \
+    --syncmode=fast \
+    --cache=1024 \
+    --rpccorsdomain "*" \
+    --rpcaddr "0.0.0.0"
+
+
+ExecStop=/usr/bin/docker stop -t 10 eth-node
+ExecReload=/usr/bin/docker kill -s HUP eth-node
+
+#
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=ethd
+
+#
+OOMScoreAdjust=-900
+
+[Install]
+WantedBy=multi-user.target
+Alias=eth-node.service
