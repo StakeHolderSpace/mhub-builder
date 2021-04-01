@@ -11,7 +11,7 @@ docker build --network=host  -t stakeholder/minter-hub .
 
 ## 1 Copy binaries to host
 ```bash
-docker run  --rm \
+docker run  --rm -it \
 -v $(pwd)/mhub:/mhub/.mhub:rw \
 -v $(pwd)/build:/mhub/build:rw \
 stakeholder/minter-hub:latest bash -c "cd /mhub/bin/ ; \
