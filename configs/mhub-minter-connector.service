@@ -21,7 +21,7 @@ WorkingDirectory=/home/minter
 #
 ExecStart=-/bin/bash -c 'test -f  ./bin/mhub-minter-connector \
 && ./bin/mhub-minter-connector \
---minter-multisig=Mxffffffffffffffffffffffffffffffffffffffff \
+--minter-multisig=<MINTER MULTISIG ADDRESS> \
 --minter-chain=testnet \
 --minter-mnemonic=<MINTER MNEMONIC> \
 --cosmos-mnemonic=<COSMOS MNEMONIC> \
