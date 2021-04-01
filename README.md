@@ -11,7 +11,9 @@ docker build --network=host  -t stakeholder/minter-hub .
 docker run  --rm \
 -v $(pwd)/mhub:/mhub/.mhub:rw \
 -v $(pwd)/build:/mhub/build:rw \
-stakeholder/minter-hub:latest cp -a /mhub/bin/. /mhub/build/linux/
+stakeholder/minter-hub:latest bash -c "cd /mhub/bin/ ; \
+zip -r /mhub/build/linux/mhub_$(mhub version)_linux.zip *; \
+cd /mhub/build/linux/ && sha256sum -b * > mhub_$(mhub version)_SHA256SUMS" 
 ```
 
 
@@ -49,8 +51,8 @@ stakeholder/minter-hub:latest mhub keys add validator1 --home /mhub/.mhub --keyr
 #>>>>
 - name: validator1
   type: local
-  address: hub1xjuc8rm6w53xkfyucn4yrkequc0rcuer8zgyx6
-  pubkey: hubpub1addwnpepq008c0sgd6kj5ee3fuvy6emq5qqlkjfglrxy7ctzvdmwlypcpps6sqe4dyj
+  address: <COSMOS ADDRESS>
+  pubkey: <COSMOS ADDRESS PUBKEY>
   mnemonic: ""
   threshold: 0
   pubkeys: []
@@ -59,7 +61,7 @@ stakeholder/minter-hub:latest mhub keys add validator1 --home /mhub/.mhub --keyr
 **Important** write this mnemonic phrase in a safe place.
 It is the only way to recover your account if you ever forget your password.
 
-fortune exit regular old organ snake pencil farm normal ecology limb improve raise mansion joy prize broom dune address panda observe special tank rack
+<COSMOS MNEMONIC>
 ```
 
 Helpful commands:
@@ -91,7 +93,7 @@ docker run  --rm -it \
 stakeholder/minter-hub:latest mhub tendermint show-validator --home /mhub/.mhub 
 
 #>>>
-cosmosvalconspub1zcjduepqz4ea4ne8jlzny84cnlm2k0gy9jwmus7kjcjpdwzvskftuanwlyksyhvntn
+<VALIDATOR PUBLIC KEY>
 ```
 ###3.2 Register Hub validator
 ```bash
@@ -123,10 +125,10 @@ docker run  --rm -it \
 stakeholder/minter-hub:latest  mhub-keys-generator --home /mhub/.mhub 
 
 #>>>
-Ethereum private key: c6b9b61db8d5ce832ac37abee7b63cb853ddf739e65219f84b29dcea04f264a2
+Ethereum private key: <ETHEREUM PRIVATE KEY>
 Ethereum address: 0xc950BE987A599C3E30AC24006a4980BF5DA225Fb
 
-Minter mnemonic: ankle taste coach race praise skirt palm sport hamster exhibit furnace vendor
+Minter mnemonic: <MINTER MNEMONIC>
 Minter address: Mx0a7884b122fa52cd32495523a1691fe1e22c8bdf
 
 ```
@@ -140,9 +142,9 @@ docker run  --rm -it \
 -v $(pwd)/mhub:/mhub/.mhub:rw \
 \
 stakeholder/minter-hub:latest register-peggy-delegate-keys \
---cosmos-phrase="evidence castle provide embark model shop solution pioneer sponsor chalk couch cage stable blade aunt stand start sing glad mechanic ceiling kingdom stay fire" \
---validator-phrase="evidence castle provide embark model shop solution pioneer sponsor chalk couch cage stable blade aunt stand start sing glad mechanic ceiling kingdom stay fire" \
---ethereum-key="2b84acefc6f30c0f2cffd0a72bdeb2d4f0475985e34ce8830fcbcebd56aaddaa" \
+--cosmos-phrase="<COSMOS MNEMONIC>" \
+--validator-phrase="<COSMOS MNEMONIC>" \
+--ethereum-key="<ETHEREUM PRIVATE KEY>" \
 --cosmos-rpc="http://127.0.0.1:1317" \
 --fees=hub
 ```

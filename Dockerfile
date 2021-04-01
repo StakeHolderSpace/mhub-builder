@@ -12,6 +12,7 @@ ENV MHUB_HOME=/mhub \
 RUN set -eux; \
     apt-get update -y ;\
     apt-get install --no-install-recommends -y -q \
+        zip \
         curl \
         ca-certificates \
         ; \
