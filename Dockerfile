@@ -4,7 +4,9 @@ FROM stakeholder/minter-hub:builder as builder
 FROM ubuntu:focal as release
 LABEL maintainer="StakeHolder Team <>"
 
-ENV MHUB_HOME=/mhub \
+ARG MHUB_HOME=/mhub
+
+ENV MHUB_HOME=${MHUB_HOME} \
     MHUB_USER=mhub \
     PATH=/mhub/bin:$PATH \
     TINI_VERSION=v0.19.0
@@ -13,6 +15,7 @@ RUN set -eux; \
     apt-get update -y ;\
     apt-get install --no-install-recommends -y -q \
         zip \
+        unzip \
         curl \
         ca-certificates \
         ; \

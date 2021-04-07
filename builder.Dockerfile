@@ -34,7 +34,7 @@ RUN set -eux; \
 RUN set -eux; \
     # Hub ↔ Ethereum oracle
     cd $MODULE_DIR/orchestrator \
-    && cargo install --path orchestrator \
-    && cargo install --path register_delegate_keys; \
+    && cargo install --locked  --path orchestrator \
+    && cargo install --locked  --path register_delegate_keys \
     \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
