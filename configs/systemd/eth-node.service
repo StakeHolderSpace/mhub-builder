@@ -13,7 +13,7 @@ TimeoutSec=300
 User=minter
 #RemainAfterExit=yes
 LimitNOFILE=10000
-LimitNPROC=8142
+LimitNPROC=1000
 #
 WorkingDirectory=/home/minter
 #
