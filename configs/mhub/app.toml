@@ -135,7 +135,7 @@ enabled-unsafe-cors = false
 enable = true
 
 # Address defines the gRPC server address to bind to.
-address = "127.0.0.1:1090"
+address = "127.0.0.1:9090"
 
 ###############################################################################
 ###                        State Sync Configuration                         ###

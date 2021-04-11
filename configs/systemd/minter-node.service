@@ -12,12 +12,12 @@ TimeoutSec=300
 #
 User=minter
 #RemainAfterExit=yes
-LimitNOFILE=10000
+LimitNOFILE=20000
 LimitNPROC=1000
 #
 WorkingDirectory=/home/minter
 #
-ExecStart=-/bin/bash -c 'test -f  ./bin/minter && ./bin/minter node --testnet'
+ExecStart=-/bin/bash -c 'test -f  ./bin/minter && ./bin/minter node'
 #
 StandardOutput=syslog
 StandardError=syslog
