@@ -18,7 +18,6 @@ LimitNPROC=1000
 WorkingDirectory=/home/minter
 EnvironmentFile=/home/minter/.config/systemd-mhub.env
 #
-
 ExecStartPre=-/usr/bin/docker rm eth-node
 ExecStart=/usr/bin/docker run --rm \
     -v /home/minter/.eth:/root/.ethereum:rw \
@@ -27,13 +26,15 @@ ExecStart=/usr/bin/docker run --rm \
     --ulimit nofile=10000:10000 \
     --log-driver journald \
     --name eth-node \
-    ethereum/client-go --rpc \
+    \
+    ethereum/client-go:stable \
     --syncmode=fast \
     --cache=1024 \
+    --rpc \
     --rpccorsdomain "*" \
     --rpcaddr "0.0.0.0" $ETHEREUM_EXT_OPTIONS
 
-
+#
 ExecStop=/usr/bin/docker stop -t 10 eth-node
 ExecReload=/usr/bin/docker kill -s HUP eth-node
 

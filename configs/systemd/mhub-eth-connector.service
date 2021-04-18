@@ -23,12 +23,13 @@ EnvironmentFile=/home/minter/.config/systemd-mhub.env
 #
 ExecStart=-/bin/bash -c 'test -f  ./bin/orchestrator \
 && RUST_LOG=info ./bin/orchestrator \
-   --cosmos-phrase="$MHUB_MNEMONIC"  \
+   --cosmos-phrase="$MHUB_MNEMONIC" \
+   --ethereum-key="$ETHEREUM_PRIV_KEY" \
    --cosmos-grpc="http://127.0.0.1:9090" \
    --cosmos-legacy-rpc="http://127.0.0.1:1317" \
    --ethereum-rpc="http://127.0.0.1:8545/" \
-   --fees=hub \
-   --contract-address="$ETHEREUM_CONTRACT_ADDR"'
+   --contract-address="$ETHEREUM_CONTRACT_ADDR" \
+   --fees=hub'
 #
 StandardOutput=syslog
 StandardError=syslog
